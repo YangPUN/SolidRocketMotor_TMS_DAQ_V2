@@ -3,7 +3,7 @@
 ADS1115 ADS(ADS1115_ADDR);
 HX711 scale;
 
-static unsigned long last_print_time = 0;
+static unsigned long prev_micros_press = 0;
 
 void setup() {
   Serial.begin(SERIAL_BAUDRATE);
@@ -11,24 +11,28 @@ void setup() {
   scale.begin(HX711_DATA_PIN, HX711_CLK_PIN);
   scale.set_scale(LOAD_CELL_CAL_FACTOR);
   
-  // Wait for sensors to stabilize FIRST
+  // Wait for stabilization
   delay(3000); 
-  
-  // Tare AFTER stabilization
   scale.tare(); 
 
   Wire.begin();
   ADS.begin();
   ADS.setGain(1);
-  ADS.setDataRate(7);
-  ADS.readADC(0);
+  ADS.setDataRate(7); 
 }
 
 void loop() {
-  unsigned long current_time = millis();
+  unsigned long current_micros = micros();
+  unsigned long current_ms = millis();
   
-  if (current_time - last_print_time >= SENSOR_RATE) {
-    print_value_to_serial(current_time);
-    last_print_time = current_time;
+  // Pressure loop
+  if (current_micros - prev_micros_press >= PRESS_INTERVAL_US) {
+    print_pressure(current_ms);
+    prev_micros_press = current_micros;
+  }
+
+  // Thrust loop
+  if (scale.is_ready()) {
+    print_thrust(current_ms);
   }
 }

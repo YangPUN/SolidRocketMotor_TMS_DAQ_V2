@@ -14,7 +14,12 @@
 #define SENSOR_RATE 10
 #define LOAD_CELL_CAL_FACTOR 86.39632
 
-void print_value_to_serial(unsigned long time);
+// Async interval
+#define PRESS_INTERVAL_US 2000 // 500 Hz
+
+void print_pressure(unsigned long time_ms);
+void print_thrust(unsigned long time_ms);
+float get_pressure(float voltage);
 
 extern ADS1115 ADS;
 extern HX711 scale;
