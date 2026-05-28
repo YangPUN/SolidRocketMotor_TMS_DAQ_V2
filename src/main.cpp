@@ -11,7 +11,7 @@ void setup() {
   scale.begin(HX711_DATA_PIN, HX711_CLK_PIN);
   scale.set_scale(LOAD_CELL_CAL_FACTOR);
   
-  // Wait for stabilization
+  // Wait for loadcell stabilization
   delay(3000); 
   scale.tare(); 
 
@@ -23,16 +23,17 @@ void setup() {
 
 void loop() {
   unsigned long current_micros = micros();
-  unsigned long current_ms = millis();
   
-  // Pressure loop
+  // Pressure loop (500Hz)
   if (current_micros - prev_micros_press >= PRESS_INTERVAL_US) {
-    print_pressure(current_ms);
+    print_pressure(current_micros);
     prev_micros_press = current_micros;
   }
 
-  // Thrust loop
+  // Thrust loop (Hardware-driven rate)
   if (scale.is_ready()) {
-    print_thrust(current_ms);
+    // Fetch precise hardware ready time
+    unsigned long thrust_micros = micros(); 
+    print_thrust(thrust_micros);
   }
 }

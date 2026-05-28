@@ -6,7 +6,9 @@
 .venv/
 __pycache__/
 *.pyc
+.python-version
 
 # DAQ Data Files
 csv_files/
 *.csv
+

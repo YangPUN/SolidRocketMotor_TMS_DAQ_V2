@@ -11,14 +11,16 @@
 #define HX711_CLK_PIN 7
 #define ADS1115_ADDR 0x48
 #define R_MAGNITUDE 153
-#define SENSOR_RATE 10
+
+// Check your actual hardware calibration factor
 #define LOAD_CELL_CAL_FACTOR 86.39632
 
 // Async interval
 #define PRESS_INTERVAL_US 2000 // 500 Hz
 
-void print_pressure(unsigned long time_ms);
-void print_thrust(unsigned long time_ms);
+// Change arguments to microseconds
+void print_pressure(unsigned long time_us);
+void print_thrust(unsigned long time_us);
 float get_pressure(float voltage);
 
 extern ADS1115 ADS;
