@@ -1,0 +1,12 @@
+# PlatformIO
+.pio/
+.vscode/
+
+# Python & uv
+.venv/
+__pycache__/
+*.pyc
+
+# DAQ Data Files
+csv_files/
+*.csv
