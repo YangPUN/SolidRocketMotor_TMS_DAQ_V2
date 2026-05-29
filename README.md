@@ -25,7 +25,7 @@ This project utilizes `uv` and `pyproject.toml` for fast dependency management.
 
 **1. Clone the repository:**
 ```bash
-git clone [https://github.com/YangPUN/SolidRocketMotor_TMS_DAQ_V2.git](https://github.com/YangPUN/SolidRocketMotor_TMS_DAQ_V2.git)
+git clone https://github.com/YangPUN/SolidRocketMotor_TMS_DAQ_V2.git
 cd SolidRocketMotor_TMS_DAQ_V2
 ```
 
