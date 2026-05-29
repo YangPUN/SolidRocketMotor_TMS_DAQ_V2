@@ -56,5 +56,20 @@ Accurate thrust measurement requires load cell calibration before testing. In th
 4. Update the `LOAD_CELL_CAL_FACTOR` macro with your calculated value.
 5. Rebuild and upload the firmware to the Teensy board using PlatformIO.
 
+## Calibration Guide (Pressure Sensor)
+This system utilizes a  $4\text{-}20\text{mA}$ current loop pressure sensor. Calibration is achieved via a hardware shunt resistor and software conversion formulas.
+
+1. **Shunt Resistor Measurement**
+   * Use a multimeter to precisely measure the actual resistance of the shunt resistor installed on the circuit.
+   * Update the `R_MAGNITUDE` macro in `src/daq_setting.h` with the measured value (e.g., 150.2).
+
+2. **Verify Max Pressure (Span)**
+   * The current C++ code is calibrated for a 1000 PSI (approx. 68.9476 Bar) sensor.
+   * If using a sensor with a different specification, modify the pressure conversion constant (`68.9476`) in the `get_pressure()` function within `src/data.cpp` to match the maximum pressure (in Bar) of your specific sensor.
+
+3. **Zero-point Offset Adjustment**
+   * Run the system at ambient atmospheric pressure and observe the initial pressure reading on the GUI.
+   * If the reading is not exactly 0 Bar, modify the return statement in `get_pressure()` (`src/data.cpp`) to subtract this specific offset value.
+     
 ## Maintainer
 * **Electronics Team Lead**
